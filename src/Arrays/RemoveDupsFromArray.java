@@ -6,8 +6,8 @@ import java.util.Arrays;
 public class RemoveDupsFromArray {
     public static void main(String[] args) {
         int[] a = {1, 1, 2, 2, 4, 4, 4, 4, 5, 5, 5, 6};
-        int[] res = rD(a);
-        System.out.print(Arrays.toString(res));
+        int res = rD(a, a.length);
+        System.out.print(res);
     }
 
     public static ArrayList<Integer> removeDups(int[]arr){
@@ -20,15 +20,18 @@ public class RemoveDupsFromArray {
         }
         return al;
     }
-    public static int[] rD(int[]arr){
+    // time - O(n)
+    //space - O(1)
+    public static int rD(int[]arr, int n ){
+        if (n == 0 || n == 1)
+            return n;
+        
         int j = 0;
-        for(int i = 0;i<arr.length - 1;i++){
-            if(arr[i] != arr[i+ 1]){
-                arr[j] = arr[i];
-                j++;
-            }
-            arr[j] = arr[arr.length - 1];
-        }
-        return arr;
+        for (int i = 0; i < n-1; i++)
+            if (arr[i] != arr[i+1])
+                arr[j++] = arr[i];
+
+        arr[j++] = arr[n-1];
+        return j;
     }
 }

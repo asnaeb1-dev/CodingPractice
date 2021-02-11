@@ -2,7 +2,7 @@ package Arrays;
 
 import java.util.*;
 
-public class SortBuAbsDifference {
+public class SortByAbsDifference {
     public static void main(String[] args) {
         int[] a = {10, 5, 3, 9, 2};
         sort(a, a.length, 7);

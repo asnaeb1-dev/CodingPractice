@@ -1,0 +1,139 @@
+package Heap;
+
+/**Q
+ * heap is represented as an array in the memory.
+ * 1) Insert operation
+ * 2) Heapify
+ * 3) Get minimum
+ * 4) Get right child
+ * 5) get left child
+ * 6) get parent
+ * 7) display a heap ds
+ *
+ */
+public class Heap {
+    int size;
+    int capacity;
+    //int[] arr = {40, 20, 30, 35, 25, 80, 32, 100, 70, 60};
+    int[] arr;
+    public Heap(int capacity) {
+        size = 0;
+        this.capacity = capacity;
+        arr = new int[capacity];
+    }
+
+    public int getLeft(int i){
+        return 2 * i + 1;
+    }
+
+    public int getRight(int i){
+        return 2 * i + 2;
+    }
+
+    public int getParent(int i){
+        return (i - 1) / 2;
+    }
+
+    public void insert(int data){
+        if(size == capacity)
+            return;
+        size ++;
+        arr[size - 1] = data;
+        int i = size -1;
+        while(i != 0 && arr[getParent(i)] > arr[i]){
+            int temp = arr[getParent(i)];
+            arr[getParent(i)] = arr[i];
+            arr[i] = temp;
+            i = getParent(i);
+        }
+    }
+
+    private void displayHeap(){
+        for(int i : arr){
+            System.out.print(i + " ");
+        }
+    }
+
+    private void heapify(){
+        for(int i = 0;i<size;i++){
+            if(getLeft(i) < arr.length && getRight(i) < arr.length){
+                int min = Math.min(arr[i], Math.min(arr[getLeft(i)], arr[getRight(i)]));
+                if(min != arr[i]){
+                    if(min == arr[getRight(i)]){
+                        int temp = arr[getRight(i)];
+                        arr[getRight(i)] = arr[i];
+                        arr[i] = temp;
+                    }else{
+                        int temp = arr[getLeft(i)];
+                        arr[getLeft(i)] = arr[i];
+                        arr[i] = temp;
+                    }
+                }
+            }else if(getLeft(i) < arr.length){
+                int min = Math.min(arr[getLeft(i)], arr[i]);
+                if(min != arr[i]){
+                    int temp = arr[getLeft(i)];
+                    arr[getLeft(i)] = arr[i];
+                    arr[i] = temp;
+                }
+            }else if(getRight(i) < arr.length){
+                int min = Math.min(arr[getRight(i)], arr[i]);
+                if(min != arr[i]){
+                    int temp = arr[getRight(i)];
+                    arr[getRight(i)] = arr[i];
+                    arr[i] = temp;
+                }
+            }
+
+        }
+    }
+
+    private int extractMin(){
+        if(size == 0){
+            return -1;
+        }
+        if(size == 1){
+            size--;
+            return arr[0];
+        }
+        size--;
+        int t = arr[0];
+        arr[0] = arr[size - 1];
+        arr[size - 1] = t;
+        heapify();
+        return t;
+    }
+
+    //also might be called as DECREASE KEY
+    private void changeKey(int pos, int value){
+        arr[pos] = value;
+        int i = pos;
+        while(i != 0 && arr[getParent(i)] > arr[i]){
+            int temp = arr[getParent(i)];
+            arr[getParent(i)] = arr[i];
+            arr[i] = temp;
+            i = getParent(i);
+        }
+    }
+
+    private void deleteKey(int index){
+        changeKey(index, Integer.MIN_VALUE);
+        extractMin();
+    }
+
+    public static void main(String[] args){
+        Heap heap = new Heap(10);
+        heap.insert(10);
+        heap.insert(20);
+        heap.insert(40);
+        heap.insert(100);
+        heap.insert(70);
+        //heap.insert(60);
+
+        //System.out.println(heap.extractMin());
+        //heap.changeKey(3, 5);
+        //heap.displayHeap();
+        heap.deleteKey(3);
+        heap.displayHeap();
+    }
+}

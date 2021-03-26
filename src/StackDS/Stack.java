@@ -1,4 +1,4 @@
-package Stack;
+package StackDS;
 
 /**Q - using array
  * Stack is a linear data structure

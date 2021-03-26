@@ -1,4 +1,4 @@
-package Stack;
+package StackDS;
 
 class StackNode{
     int data;

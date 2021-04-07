@@ -1,6 +1,6 @@
 package StackDS;
 
-/**
+/**Q
  * Given an array A of size N.
  * You need to first push the elements of the array into a stack and then print minimum in the stack at each pop.
  *

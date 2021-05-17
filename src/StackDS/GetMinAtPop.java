@@ -43,7 +43,8 @@ package StackDS;
 import java.util.Stack;
 public class GetMinAtPop {
     public static void main(String[] args) {
-
+        int[] a = {2, -1, 5, 3, 1};
+        getMinAtPop(a);
     }
     private static void getMinAtPop(int[] arr){
         Stack<Integer> s = new Stack<>();

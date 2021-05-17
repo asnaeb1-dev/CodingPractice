@@ -2,7 +2,7 @@ package DynamicProgramming;
 
 import java.math.BigInteger;
 
-/**
+/**Question
  * Given a number N. The task is to find the Nth catalan number.
  * The first few Catalan numbers for N = 0, 1, 2, 3, … are 1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, …
  * Note: Positions start from 0 as shown above.
@@ -25,6 +25,8 @@ import java.math.BigInteger;
  * C(2) = C(0) * C(1) + C(1) * C(0)
  *
  * C(i) = C(0) * C(i - 1) + C(1) * C(i - 2) + ... + C(i - 1) * C(0)
+ *
+ * For help: https://www.youtube.com/watch?v=CMaZ69P1bAc
  */
 public class NthCatalanNumber {
     static int[] dp ;

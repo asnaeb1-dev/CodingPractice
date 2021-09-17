@@ -27,4 +27,5 @@ public class Traversal {
         System.out.print(root.data + " ");
         inOrder(root.right);
     }
+
 }

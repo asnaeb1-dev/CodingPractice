@@ -3,12 +3,12 @@ package StackDS;
 /**Q - using array
  * Stack is a linear data structure
  */
-public class Stack {
+public class StackX<I extends Number> {
     private static int[] arr;
     private int capacity;
     private static int top = -1;
 
-    public Stack(int capacity) {
+    public StackX(int capacity) {
         this.capacity = capacity;
         arr = new int[capacity];
     }
@@ -43,7 +43,7 @@ public class Stack {
     }
 
     public static void main(String[] args) {
-        Stack stack = new Stack(100);
+        StackX<Integer> stack = new StackX<>(100);
         push(10);
         push(20);
         push(30);

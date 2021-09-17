@@ -10,41 +10,33 @@ public class CountIslands {
                 {1, 1},
                 {1, 0}
         };
-       // System.out.println(numIslands(g));
+        countIslands(g);
     }
-    public static int numIslands(char[][] grid)
-    {
-        int island = 0;
-        int V = Math.max(grid.length, grid[0].length);
-        System.out.println(V);
-        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
-        for(int i = 0;i<V;i++){
-            ArrayList<Integer> temp = new ArrayList<>();
-        }
-        for(int i = 0;i<grid.length;i++){
-            for(int j = 0;j<grid[i].length;j++){
-                if(grid[i][j] == 1){
-                    adj.get(i).add(j);
-                }
-            }
-        }
+    private static void countIslands(int[][] mat){
+        int V = Math.max(mat.length, mat[0].length);
+        int c = dfs(mat, V);
+        System.out.println(c);
+    }
 
-        boolean[] vis = new boolean[V];
-        for(int i = 0;i< V;i++){
+    private static int dfs(int[][] mat, int v) {
+        boolean[] vis = new boolean[v + 1];
+        int c = 0;
+        for(int i = 0;i<v;i++){
             if(!vis[i]){
-                island++;
-                dfs(vis, adj , i);
+                c++;
+                dfsRec(mat, vis, i);
             }
         }
-        return island;
+        return c;
     }
-    private static void dfs(boolean[] vis, ArrayList<ArrayList<Integer>> adj, int s){
+
+    private static void dfsRec(int[][] mat, boolean[] vis, int s){
         vis[s] = true;
-        for(int v : adj.get(s)){
+        for(int v : mat[s]){
             if(!vis[v]){
-                vis[v] = true;
-                dfs(vis, adj, v);
+                dfsRec(mat, vis, v);
             }
         }
     }
+
 }

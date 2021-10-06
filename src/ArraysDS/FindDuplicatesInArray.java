@@ -1,10 +1,13 @@
 package ArraysDS;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FindDuplicatesInArray {
     public static void main(String[] args) {
-        int[] a = {2, 3, 1, 2, 3};
-        System.out.println(findDuplicates(a, a.length).toString());
+        int[] a = {1, 3, 4, 5, 7};
+        //System.out.println(findDuplicates(a, a.length).toString());
+        find(a, a.length);
+        System.out.println(Arrays.toString(a));
     }
     //Time - O(n)
     //Time - O(n)
@@ -22,7 +25,16 @@ public class FindDuplicatesInArray {
         return al;
     }
 
-//    private static ArrayList<Integer> findDups(int[] a, int n){
-//
-//    }
+    private static void find(int[] a, int n){
+//        for(int i =0;i<n;i++){
+//            a[i]--;
+//        }
+        for(int i = 0;i<n;i++){
+            a[a[i] % n] = a[a[i] % n] + n;
+        }
+        for(int i = 0;i<n;i++){
+            a[i] = a[i] / n;
+        }
+    }
+
 }

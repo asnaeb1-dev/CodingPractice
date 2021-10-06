@@ -41,6 +41,21 @@ public class RotateArray {
         }
     }
 
+    private static void juggleImp(int[]a, int k, int n){
+        int set = gcd(n, k);
+        for(int i = 0;i<set;i++){
+            int j = i;
+            int temp = a[i];
+            while(true){
+                int d = (j + k) % n;
+                if(d == i) break;
+                a[j]  = a[d];
+                j = d;
+            }
+            a[j] = temp;
+        }
+    }
+
     private static  int gcd(int a, int b){
         if(b == 0){
             return a;
@@ -62,7 +77,7 @@ public class RotateArray {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5, 6};
         int n = 6, d = 2;
-        juggle(arr, n, d);
+        juggleImp(arr, d, n);
         System.out.print(Arrays.toString(arr));
     }
 }

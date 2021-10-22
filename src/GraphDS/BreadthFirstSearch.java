@@ -6,61 +6,52 @@ import java.util.Queue;
 
 public class BreadthFirstSearch {
     public static void main(String[] args) {
-        int V = 7;
-        ArrayList<ArrayList<Integer>> list = new ArrayList<>(V);
+        int V = 4;
+        ArrayList<ArrayList<Integer>> adjList = new ArrayList<>();
         for(int i = 0;i<V;i++){
-            ArrayList<Integer> temp = new ArrayList<>();
-            list.add(temp);
+            ArrayList<Integer> al = new ArrayList<>();
+            adjList.add(al);
         }
-        list.get(0).add(1);
-        list.get(1).add(0);
-        list.get(2).add(3);
-        list.get(2).add(4);
-        list.get(3).add(2);
-        list.get(3).add(4);
-        list.get(4).add(2);
-        list.get(4).add(3);
-        list.get(5).add(6);
-        list.get(6).add(5);
 
-//        list.get(0).add(1);
-//        list.get(0).add(2);
-//        list.get(0).add(5);
-//        list.get(1).add(0);
-//        list.get(1).add(3);
-//        list.get(2).add(0);
-//        list.get(2).add(4);
-//        list.get(3).add(1);
-//        list.get(3).add(5);
-//        list.get(4).add(2);
-//        list.get(4).add(5);
-//        list.get(5).add(0);
-//        list.get(5).add(3);
-//        list.get(5).add(4);
-        System.out.println(bfs(list, V, 0));
+        //completely connected graph
+//        addEdge(adjList, 0, 1);
+//        addEdge(adjList, 0, 2);
+//        addEdge(adjList, 1, 2);
+//        addEdge(adjList, 1, 3);
+//        addEdge(adjList, 2, 3);
+//        bfs(adjList, V, 0);
+
+        //for disconected graph
+        addEdge(adjList, 0, 1);
+        addEdge(adjList, 0, 2);
+        addEdge(adjList, 1, 2);
+
+        boolean[] v = new boolean[V + 1];
+        for(int i = 0;i<V;i++){
+            if(!v[i]){
+                bfs(adjList, V, v, i);
+            }
+        }
+
     }
-    private static int bfs(ArrayList<ArrayList<Integer>> adj, int V, int s){
-        // a boolean array is required to mark which cell is visited.
-        boolean[] visited = new boolean[V];
-        int count = 0;
-        for(int i = 0;i<visited.length;i++){
-            if(!visited[i]){
-                count++;
-                Queue<Integer> q = new LinkedList<>();
-                q.add(i);
-                visited[i] = true;
-                while(!q.isEmpty()){
-                    int u = q.poll();
-                    //System.out.print(u + " ");
-                    for(Integer v : adj.get(u)){
-                        if(!visited[v]){
-                            visited[v] = true;
-                            q.add(v);
-                        }
-                    }
+
+    private static void addEdge(ArrayList<ArrayList<Integer>> adj, int u, int v){
+        adj.get(u).add(v);
+        adj.get(v).add(u);
+    }
+    private static void bfs(ArrayList<ArrayList<Integer>> adj, int V, boolean[] visited, int s){
+        Queue<Integer> q = new LinkedList<>();
+        q.add(s);
+        visited[0] = true;
+        while(!q.isEmpty()){
+            int u = q.poll();
+            System.out.println(u);
+            for(int v : adj.get(u)){
+                if(!visited[v]){
+                    visited[v] = true;
+                    q.add(v);
                 }
             }
         }
-        return count;
     }
 }

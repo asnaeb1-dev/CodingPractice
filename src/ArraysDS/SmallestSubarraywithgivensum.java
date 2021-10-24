@@ -5,23 +5,28 @@ public class SmallestSubarraywithgivensum {
         int[] a = {1, 4, 45, 6, 0, 19};
         System.out.println(smallestSubWithSum(a, a.length, 51));
     }
-    public static int smallestSubWithSum(int arr[], int n, int x) {
+    public static int smallestSubWithSum(int a[], int n, int target) {
         // Your code goes here
-        int i=0;
-        int j=0;
-        int sum=0;
-        int length=Integer.MAX_VALUE;
-        while(i<n && j<n)
-        {
-            sum=sum+arr[j];
-            while(i<n && sum>x)
-            {
-                length=Math.min(length,j-i+1);
-                sum=sum-arr[i];
-                i++;
+        int i = -1, j = -1, min = Integer.MAX_VALUE, sum = 0;
+        while(i <= j && j < n - 1){
+            while(j < n - 1){
+                j++;
+                sum+=a[j];
+                if(sum > target){
+                    break;
+                }
             }
-            j++;
+            while(i <= j){
+                if(j - i < min){
+                    min = j - i;
+                }
+                i++;
+                sum-=a[i];
+                if(sum <= target){
+                    break;
+                }
+            }
         }
-        return length;
+        return min;
     }
 }

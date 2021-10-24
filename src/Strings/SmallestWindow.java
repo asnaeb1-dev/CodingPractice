@@ -27,72 +27,61 @@ import java.util.LinkedHashMap;
  */
 public class SmallestWindow {
     public static void main(String[] args) {
-       String str = smallestWindow("timetopractice", "toc");
+       String str = smallestWindow("adobecodebanc", "abc");
         System.out.println(str);
     }
-    private static String smallestWindow(String s, String p){
-
-        //maps all the character of the string "p"
-        String ans = "";
+    private static String smallestWindow(String main, String pat){
+        HashMap<Character, Integer> map1 = new HashMap<>();
         HashMap<Character, Integer> map2 = new HashMap<>();
-        for(int i = 0;i<p.length();i++){
-            char ch = p.charAt(i);
-            if(map2.containsKey(ch)){
-                map2.put(ch, map2.get(ch) + 1);
+
+        for(int i = 0;i<pat.length();i++){
+            if(map1.containsKey(pat.charAt(i))){
+                map1.put(pat.charAt(i), map1.get(pat.charAt(i)) + 1);
             }else{
-                map2.put(ch, 1);
+                map1.put(pat.charAt(i), 1);
             }
         }
 
-        //c = count
-        //dc = desired count = size of the pattern
-        int c = 0, dc = p.length();
-        HashMap<Character, Integer> map = new HashMap<>();
-        int i = -1, j = -1;
-
-        while(true){
-            boolean f1 = false, f2 = false;
-            //acquire chacaters
-            // i<s.length() - 1 is used because u will have atleast 1 character
-            while(i < s.length() - 1 && c < dc){
-                i++;
-                char ch = s.charAt(i);
-                if(map.containsKey(ch)){
-                    map.put(ch, map.get(ch) + 1);
-                }else{
-                    map.put(ch, 1);
-                }
-
-                //only increase the count when the character acquire is of any value i.e. not extra
-                if(map.getOrDefault(ch, 0) <= map2.getOrDefault(ch, 0)){
-                    c++;
-                }
-                f1 = true;
-            }
-
-            //collect answer and release
-            while(j < i && c == dc){
-                String pans = s.substring(j + 1, i + 1);
-                if(ans.length() == 0 || pans.length() > ans.length()){
-                    ans = pans;
-                }
+        int i = -1, j = -1, count = 0, desired = pat.length(), n = main.length(), minSize = Integer.MAX_VALUE;
+        String window = "";
+        while(i <=j && j < n - 1){
+            while(j < n - 1){
                 j++;
-                char ch = s.charAt(j);
-                if(map.containsKey(ch)){
-                    if(map.get(ch) == 1){
-                        map.remove(ch);
-                    }else{
-                        map.put(ch, map.get(ch) - 1);
+                if(map2.containsKey(main.charAt(j))){
+                    map2.put(main.charAt(j), map2.get(main.charAt(j)) + 1 );
+                }else{
+                    map2.put(main.charAt(j), 1);
+                }
+                if(map1.containsKey(main.charAt(j))){
+                    count++;
+                    if(count == desired){
+                        if(j - i < minSize){
+                            minSize = j - i;
+                            window = main.substring(i + 1, j + 1);
+                        }
+                        break;
                     }
                 }
-                if(map.getOrDefault(ch, 0) < map2.getOrDefault(ch, 0)){
-                    c--;
-                }
-                f2 = true;
             }
-            if(!f1 && !f2) break;
+
+            while(i <= j){
+                i++;
+                if(map2.containsKey(main.charAt(i))){
+                    if(map2.get(main.charAt(i)) > 1){
+                        map2.put(main.charAt(i), map2.get(main.charAt(i)) - 1);
+                    }else{
+                        map2.remove(main.charAt(i));
+                    }
+
+                    if(map1.containsKey(main.charAt(i))){
+                        if(!map1.get(main.charAt(i)).equals( map2.get(main.charAt(i)))){
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
-        return  ans;
+        return  window;
     }
 }

@@ -30,7 +30,7 @@ public class CountDistinctElements {
             map.put(a[j], map.get(a[j]) - 1);
             if(map.containsKey(a[i])){
                 al.add(map.size());
-                map.put(a[i], map.get(a[i]) - 1);
+                map.put(a[i], map.get(a[i]) + 1);
             }else{
                 map.put(a[i], 1);
                 al.add(map.size());

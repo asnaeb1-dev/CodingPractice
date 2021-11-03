@@ -32,17 +32,22 @@ public class KLargestElements {
         System.out.println(Arrays.toString(klargest(a, k)));
     }
     private static int[] klargest(int[] arr, int k){
-        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
-        for(int i : arr){
-            pq.add(i);
-        }
-
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
         int[] res = new int[k];
         int i = 0;
-        while(k != 0){
-            res[i] = pq.poll();
-            i++;
-            k--;
+        for(;i<k;i++){
+            pq.add(i);
+        }
+        for(;i<arr.length;i++){
+            if(arr[i] > pq.peek()){
+                pq.remove();
+                pq.add(arr[i]);
+            }
+        }
+        int x = 0;
+        while(!pq.isEmpty()){
+            res[x] = pq.remove();
+            x++;
         }
         return res;
     }

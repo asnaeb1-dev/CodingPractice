@@ -21,14 +21,14 @@ public class CoinChange {
            return 0;
        }
        int r = Integer.MAX_VALUE;
-       for(int i = 0;i<coins.length;i++){
-           if(coins[i] <= v){
-               int sub_res = coinChange(coins, v - coins[i], c);
-               if(sub_res != Integer.MAX_VALUE){
-                   r = Math.min(sub_res + 1, r);
-               }
-           }
-       }
+        for (int coin : coins) {
+            if (coin <= v) {
+                int sub_res = coinChange(coins, v - coin, c);
+                if (sub_res != Integer.MAX_VALUE) {
+                    r = Math.min(sub_res + 1, r);
+                }
+            }
+        }
        return r;
     }
 

@@ -1,24 +1,24 @@
 package DynamicProgramming;
 
 public class StringInterleave {
-    private static boolean isInterleave(String a, String b, String c, int l, int m, int n){
-        if(l == 0){
-            return true;
+    private static boolean isInterleave(String s1, String s2, String c){
+        return checkOne(s1, c, s1.length(), c.length()) && checkOne(s2, c, s2.length(), c.length());
+    }
+
+    private static boolean checkOne(String s1, String c, int n, int m){
+        if(n == 0 && m == 0) return true;
+        if(m != 0 && n == 0) return true;
+        if(m == 0 && n != 0) return false;
+        if(s1.charAt(n - 1) == c.charAt(m - 1)){
+            return checkOne(s1, c, n - 1, m - 1);
         }
-        if(n == 0 || m == 0) return false;
-        if(a.charAt(l - 1) == c.charAt(n - 1)){
-            return isInterleave(a, b, c, l -1, m, n - 1);
-        }
-        if(b.charAt(m - 1) == c.charAt(n - 1)){
-            return isInterleave(a, b, c, l, m - 1, n - 1);
-        }
-        return false;
+        return checkOne(s1, c, n, m - 1);
     }
 
     public static void main(String[] args) {
-        String a = "x";
-        String b = "axy";
-        String c = "xa";
-        System.out.println(isInterleave(a, b, c, a.length(), b.length(), c.length()));
+        String s1 = "cab";
+        String s2 = "acb";
+        String c = "acbabc";
+        System.out.println(isInterleave(s1, s2, c));
     }
 }

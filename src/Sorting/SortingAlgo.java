@@ -7,7 +7,9 @@ public class SortingAlgo {
         int[] a = {9, 7, 6, 5, 4, 3};
         //bubbleSort(a);
         //selectionSort(a);
-        insertionSort(a);
+       // insertionSort(a);
+        //quickSort(a);
+        mergeSort(a);
         System.out.println(Arrays.toString(a));
     }
     //bubble sort - O(n2)
@@ -47,6 +49,64 @@ public class SortingAlgo {
                 hole--;
             }
             a[hole] = val;
+        }
+    }
+
+    //quick sort - O(n log n)
+    private static void quickSort(int[] a){
+        //Using Lommuto partition
+        int l = 0, h = a.length;
+        quickSortHelper(a, l, h - 1);
+    }
+
+    private static void quickSortHelper(int[] a, int l, int r){
+        if(l < r){
+            int p = new PartitionAlgorithms().lomutoAlgorithm(a, l, r);
+            quickSortHelper(a, l, p - 1);
+            quickSortHelper(a, p + 1, r);
+        }
+    }
+
+    private static void mergeSort(int[] a){
+        mergeSortHelper(a, 0, a.length - 1);
+    }
+    private static void mergeSortHelper(int[] a, int l, int r){
+        if(l < r){
+            int mid = l + (r - l)/2;
+            mergeSortHelper(a, l, mid);
+            mergeSortHelper(a, mid + 1, r);
+            merge(a, l, mid, r);
+        }
+    }
+    private static void merge(int[] a, int l, int m, int r){
+        int[] L = new int[m - l + 1];
+        int[] R = new int[r - m];
+        for(int i = 0, k = 0;i<L.length;i++, k++){
+            L[i] = a[i + l];
+        }
+        for(int j = 0, k = 0;j<R.length;j++, k++){
+            R[j] = a[m + 1 + j];
+        }
+        int i = 0, j = 0, k = l;
+        while(i != L.length && j != R.length){
+            if(L[i] <= R[j]){
+                a[k] = L[i];
+                i++;
+            }else{
+                a[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+        while(i != L.length){
+            a[k] = L[i];
+            i++;
+            k++;
+        }
+        while(j != R.length){
+            a[k] = R[j];
+            j++;
+            k++;
         }
     }
 }

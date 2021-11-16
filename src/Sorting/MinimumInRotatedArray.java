@@ -1,4 +1,4 @@
-package Searching;
+package Sorting;
 /**TODO ===> CLEAR THIS
 /**Question -->
  * Suppose an array of length n sorted in ascending order is rotated between 1 and n times.

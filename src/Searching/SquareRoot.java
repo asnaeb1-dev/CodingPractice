@@ -2,21 +2,19 @@ package Searching;
 
 public class SquareRoot {
     public static void main(String[] args) {
-        System.out.println((int)root(15));
+        System.out.println((int)root(5));
     }
     private static long root(int n){
-        int l = 0, r = n;
+        long l = 0, r = n, m = 0, ans = -1;
         while(l <= r){
-            int mid = l + (r - l)/2;
-            if(mid * mid == n){
-                return mid;
-            }
-            else if(n > mid * mid){
-                l = mid + 1;
+            m = l + (r - l)/2;
+            if(m * m <= n){
+                ans = m;
+                l = m + 1;
             }else{
-                r = mid -1;
+                r = m - 1;
             }
         }
-        return (long) (Math.floor(Math.sqrt(n * 1.0)));
+        return ans;
     }
 }

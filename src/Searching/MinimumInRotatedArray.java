@@ -1,5 +1,5 @@
-package Sorting;
-/**TODO ===> CLEAR THIS
+package Searching;
+/**
 /**Question -->
  * Suppose an array of length n sorted in ascending order is rotated between 1 and n times.
  * For example, the array nums = [0,1,2,4,5,6,7] might become:
@@ -39,17 +39,28 @@ public class MinimumInRotatedArray {
     }
     private static int search(int[] a, int n){
         int l = 0, r = n - 1;
-        while(l < r){
-            int mid = (l + r)/2;
-            if(mid > 0 && a[mid] < a[mid - 1]){
-                return a[mid];
+        while(l <= r){
+            int mid = l + (r - l)/2;
+            if(mid == 0){
+                if(a[mid] < a[mid + 1]){
+                    return a[mid];
+                }
             }
-            if(a[l] <= a[mid] && a[mid] > a[r]){
+            if(mid == n - 1){
+                if(a[mid] < a[mid - 1]){
+                    return a[mid];
+                }
+            }
+            if(a[mid] < a[mid + 1] && a[mid] < a[mid - 1]){
+                return a[mid];
+            }else if(a[l] < a[mid] && a[mid] < a[r]){
+                return a[l];
+            }else if(a[l] <= a[mid]){
                 l = mid + 1;
-            }else{
+            }else {
                 r = mid - 1;
             }
         }
-        return a[l];
+        return -1;
     }
 }

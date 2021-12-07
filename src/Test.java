@@ -3,13 +3,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Test {
     public static void main(String[] args) {
-        TreeMap<Integer, List<Integer>> map = new TreeMap<>();
-        map.put(-2, List.of(1, 2));
-        map.put(-4, List.of(2, 3));
-        map.put(13, List.of(41, 22));
+        ArrayList<Integer> al = new ArrayList<>();
+        al.add(2);
+        al.add(3);
 
-        for(Map.Entry<Integer, List<Integer>> entry: map.entrySet()){
-            System.out.println(entry.getValue().get(0));
-        }
+        int t = al.get(0);
+        al.set(0, al.get(1));
+        al.set(1, t);
+
+        System.out.println(al.toString());
+
     }
 }

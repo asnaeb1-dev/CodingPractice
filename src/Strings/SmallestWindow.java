@@ -3,6 +3,7 @@ package Strings;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Given two strings. Find the smallest window in the first string consisting of all the characters of the second string.
@@ -27,61 +28,76 @@ import java.util.LinkedHashMap;
  */
 public class SmallestWindow {
     public static void main(String[] args) {
-       String str = smallestWindow("adobecodebanc", "abc");
+       String str = smallestWindow("timetopractice", "toc");
         System.out.println(str);
     }
     private static String smallestWindow(String main, String pat){
-        HashMap<Character, Integer> map1 = new HashMap<>();
-        HashMap<Character, Integer> map2 = new HashMap<>();
+        Map<Character, Integer> map = new HashMap<>();
+        Map<Character, Integer> map2 = new HashMap<>();
 
+        String window = "";
+        int matchCount = pat.length();
         for(int i = 0;i<pat.length();i++){
-            if(map1.containsKey(pat.charAt(i))){
-                map1.put(pat.charAt(i), map1.get(pat.charAt(i)) + 1);
+            char ch = pat.charAt(i);
+            if(map.containsKey(ch)){
+                map.put(ch, map.get(ch) + 1);
             }else{
-                map1.put(pat.charAt(i), 1);
+                map.put(ch, 1);
             }
         }
 
-        int i = -1, j = -1, count = 0, desired = pat.length(), n = main.length(), minSize = Integer.MAX_VALUE;
-        String window = "";
-        while(i <=j && j < n - 1){
-            while(j < n - 1){
-                j++;
-                if(map2.containsKey(main.charAt(j))){
-                    map2.put(main.charAt(j), map2.get(main.charAt(j)) + 1 );
-                }else{
-                    map2.put(main.charAt(j), 1);
-                }
-                if(map1.containsKey(main.charAt(j))){
-                    count++;
-                    if(count == desired){
-                        if(j - i < minSize){
-                            minSize = j - i;
-                            window = main.substring(i + 1, j + 1);
-                        }
-                        break;
+        int i = 0, j = 0, desiredMatch = 0, n = main.length(), minLength = Integer.MAX_VALUE;
+        while(j < n && i <= j){
+            while(j < n){
+                char ch = main.charAt(j);
+                if(desiredMatch == matchCount){
+                    break;
+                }else if(map2.size() == 0 && !map.containsKey(ch)){
+                    i++;
+                }else if(map.containsKey(ch)){
+
+                    if(map2.containsKey(ch)){
+                        map2.put(ch, map2.get(ch) + 1);
+                    }else{
+                        map2.put(ch, 1);
+                    }
+                    if(map2.get(ch) <= map.get(ch)){
+                        desiredMatch++;
+                    }
+                }else if(!map.containsKey(ch)){
+                    if(!map2.containsKey(ch)){
+                        map2.put(ch, 1);
+                    }else{
+                        map2.put(ch, map2.get(ch) + 1);
                     }
                 }
+                j++;
             }
 
             while(i <= j){
-                i++;
-                if(map2.containsKey(main.charAt(i))){
-                    if(map2.get(main.charAt(i)) > 1){
-                        map2.put(main.charAt(i), map2.get(main.charAt(i)) - 1);
-                    }else{
-                        map2.remove(main.charAt(i));
-                    }
+                if(desiredMatch < matchCount){
+                    break;
+                }
+                if(j - i + 1 < minLength){
+                    minLength = j - i + 1;
+                    window = main.substring(i, j);
+                }
+                char deletedChar = main.charAt(i++);
+                if(map2.get(deletedChar) > 1){
+                    map2.put(deletedChar, map2.get(deletedChar) - 1);
+                }else{
+                    map2.remove(deletedChar);
+                }
 
-                    if(map1.containsKey(main.charAt(i))){
-                        if(!map1.get(main.charAt(i)).equals( map2.get(main.charAt(i)))){
-                            break;
-                        }
+                if(map.containsKey(deletedChar)){
+                    if(map2.containsKey(deletedChar) && map2.get(deletedChar) < map.get(deletedChar)){
+                        desiredMatch--;
+                    }else if(!map2.containsKey(deletedChar)){
+                        desiredMatch--;
                     }
                 }
             }
         }
-
-        return  window;
+        return window;
     }
 }

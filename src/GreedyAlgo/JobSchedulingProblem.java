@@ -1,34 +1,68 @@
 package GreedyAlgo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
+/**
+ * Question ==>
+ * Given a set of N jobs where each jobi has a deadline and profit associated with it.
+ *
+ * Each job takes 1 unit of time to complete and only one job can be scheduled at a time.
+ * We earn the profit associated with job if and only if the job is completed by its deadline.
+ *
+ * Find the number of jobs done and the maximum profit.
+ *
+ * Note: Jobs will be given in the form (Jobid, Deadline, Profit) associated with that Job.
+ *
+ *
+ * Example 1:
+ *
+ * Input:
+ * N = 4
+ * Jobs = {(1,4,20),(2,1,10),(3,1,40),(4,1,30)}
+ * Output:
+ * 2 60
+ * Explanation:
+ * Job1 and Job3 can be done with
+ * maximum profit of 60 (20+40).
+ */
 public class JobSchedulingProblem {
-    public static void main(String[] args) {
-        ArrayList<ArrayList<Integer>> jobs = new ArrayList<>();
-        ArrayList<Integer> temp = new ArrayList<>();
-        temp.add(1);
-        temp.add(2);
-        temp.add(100);
-        jobs.add(temp);
-        temp = new ArrayList<>();
-        temp.add(2);
-        temp.add(1);
-        temp.add(19);
-        jobs.add(temp);
-        temp = new ArrayList<>();
-        temp.add(3);
-        temp.add(1);
-        temp.add(27);
-        jobs.add(temp);
+    static class Job{
+        int jobId;
+        int deadline;
+        int profit;
 
-        System.out.println(maxProfit(jobs, 3));
+        public Job(int jobId, int deadline, int profit) {
+            this.jobId = jobId;
+            this.deadline = deadline;
+            this.profit = profit;
+        }
     }
-    private static int maxProfit(ArrayList<ArrayList<Integer>> jobs, int n){
-        Collections.sort(jobs, ((o1, o2) -> o1.get(2).compareTo(o2.get(2))));
-        System.out.println(jobs.toString());
-        int[] schedule = new int[n + 1];
-        //schedule[jobs.get(0).get(0)] =
-        return -1;
+    public static void main(String[] args) {
+        Job[] jobs = new Job[4];
+
+    }
+    int[] JobScheduling(Job arr[], int n){
+        Arrays.sort(arr, (o1, o2) -> o2.profit - o1.profit);
+
+        boolean[] isDone = new boolean[n];
+        Arrays.fill(isDone, false);
+        int jobDone = 0, profit = 0;
+        for(int i = 0;i<n;i++){
+            for(int j = Integer.min(n - 1, arr[i].deadline - 1);j>=0;j--){
+                if(!isDone[j]){
+                    isDone[j] = true;
+                    profit+=arr[i].profit;
+                    jobDone++;
+                    break;
+                }
+            }
+        }
+
+        int[] result = new int[2];
+        result[0] = jobDone;
+        result[1] = profit;
+        return result;
     }
 }

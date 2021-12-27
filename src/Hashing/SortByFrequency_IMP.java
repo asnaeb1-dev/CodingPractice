@@ -23,20 +23,17 @@ public class SortByFrequency_IMP {
         }
 
         ArrayList<Map.Entry<Integer, Integer>> al = new ArrayList(map.entrySet());
-        Collections.sort(al, new Comparator<Map.Entry<Integer, Integer>>() {
-            @Override
-            public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) {
-                if(o1.getValue().equals(o2.getValue())){
-                    if(o1.getKey().compareTo(o2.getKey()) < 0){
-                        return 1;
-                    }else{
-                        return -1;
-                    }
-                }else if(o1.getValue().compareTo(o2.getValue()) < 0){
-                    return -1;
-                }else{
+        Collections.sort(al, (o1, o2) -> {
+            if(o1.getValue().equals(o2.getValue())){
+                if(o1.getKey().compareTo(o2.getKey()) < 0){
                     return 1;
+                }else{
+                    return -1;
                 }
+            }else if(o1.getValue().compareTo(o2.getValue()) < 0){
+                return -1;
+            }else{
+                return 1;
             }
         });
         for(int i = al.size() -1; i>=0;i--){

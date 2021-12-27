@@ -1,6 +1,7 @@
 package GreedyAlgo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 /**Question-->
@@ -36,31 +37,42 @@ import java.util.Collections;
  */
 
 public class NMeetings {
+
+    static class Meet{
+        int start;
+        int end;
+
+        public Meet(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+    }
+
     public static void main(String[] args) {
-        int[] s = {75250, 50074, 43659, 8931, 11273, 27545, 50879, 77924};
-        int[] f = {112960, 114515, 81825, 93424, 54316, 35533, 73383, 160252};
+        int[] s = {1, 3, 0, 5, 8, 5};
+        int[] f = {2, 4, 6, 7, 9, 9};
 
         System.out.println(meetings(s, f));
     }
     private static int meetings(int[] s, int[] f){
-        ArrayList<ArrayList<Integer>> tasks = new ArrayList<>();
-        ArrayList<Integer> temp = new ArrayList<>();
+        Meet[] meets = new Meet[s.length];
         for(int i = 0;i<s.length;i++){
-            temp.add(s[i]);
-            temp.add(f[i]);
-            tasks.add(temp);
-            temp = new ArrayList<>();
+            meets[i] = new Meet(s[i], f[i]);
         }
 
-        Collections.sort(tasks, ((o1, o2) -> o1.get(1).compareTo(o2.get(1))));
-        int c = 1;
-        int prev = tasks.get(0).get(1);
+        //note the sorting style
+        Arrays.sort(meets, ((o1, o2) -> o1.end - o2.end));
+        Meet prev = meets[0];
+        Integer totalMeets = 1;
+        System.out.print(1 +" ");
         for(int i = 1;i<s.length;i++){
-            if(tasks.get(i).get(0) > prev){
-                c++;
-                prev = tasks.get(i).get(1);
+            if(meets[i].start > prev.end){
+                totalMeets++;
+                prev = meets[i];
+                System.out.print((i + 1) +" ");
             }
         }
-        return c;
+        System.out.println();
+        return totalMeets;
     }
 }

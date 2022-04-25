@@ -2,8 +2,11 @@ package DynamicProgramming;
 
 public class SticklerThief {
     public static void main(String[] args) {
-        int[] a = {5, 5, 100, 10, 5};
-        System.out.println(sticker(a, a.length));
+        int[] a = {1, 2, 3};
+        //System.out.println(sticker(a, a.length));
+        mem = new int[a.length + 1];
+        int res = stickerThief(a, a.length);
+        System.out.println(res);
     }
     private static int sticker(int[] a, int n){
         if(n == 0) return 0;
@@ -16,5 +19,13 @@ public class SticklerThief {
             dp[i] = Math.max(dp[i - 1], dp[i - 2] + a[i]);
         }
         return Math.max(dp[n - 1], dp[n - 2]);
+    }
+
+    static int[] mem;
+    private static int stickerThief(int[] a, int n){
+        if(n == 0) return 0;
+        if(n == 1) return a[n - 1];
+        if(n == 2) return Integer.max(a[n - 1], a[0]);
+        return Integer.max(a[n - 1] + stickerThief(a, n - 2), stickerThief(a, n - 1));
     }
 }

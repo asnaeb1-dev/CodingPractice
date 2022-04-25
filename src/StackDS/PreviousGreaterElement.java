@@ -10,20 +10,21 @@ public class PreviousGreaterElement {
         System.out.println(Arrays.toString(r));
     }
     private static int[] previous(int[] p, int n){
-        int[] r = new int[n];
         Stack<Integer> s = new Stack<>();
-        s.push(0);
+        int[] r = new int[n];
         r[0] = -1;
+        s.push(p[0]);
         for(int i = 1;i<n;i++){
-            while(!s.empty() && p[s.peek()] < p[i]){
+            while(!s.empty() && s.peek() < p[i]){
                 s.pop();
             }
+
             if(s.empty()){
                 r[i] = -1;
             }else{
-                r[i] = p[s.peek()];
+                r[i] = s.peek();
             }
-            s.push(i);
+            s.push(p[i]);
         }
         return r;
     }

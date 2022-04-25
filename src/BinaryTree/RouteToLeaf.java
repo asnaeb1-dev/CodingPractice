@@ -7,22 +7,29 @@ public class RouteToLeaf {
         TreeNode root = new TreeNode(1);
         root.left = new TreeNode(2);
         root.right = new TreeNode(3);
-        root.left.left = new TreeNode(4);
-        root.left.right = new TreeNode(5);
-        root.right.left = new TreeNode(6);
+//        root.left.left = new TreeNode(4);
+//        root.left.right = new TreeNode(5);
+//        root.right.left = new TreeNode(6);
         ArrayList<Integer> al = new ArrayList<>();
-        rootToLeaf(root, al);
+        ArrayList<ArrayList<Integer>> temp = new ArrayList<>();
+        rootToLeaf(root, al, temp);
+
+        for(ArrayList<Integer> res : temp){
+            System.out.println(res.toString());
+        }
     }
-    private static void rootToLeaf(TreeNode root, ArrayList<Integer> al){
+    private static void rootToLeaf(TreeNode root, ArrayList<Integer> al, ArrayList<ArrayList<Integer>> temp){
         if(root == null){
             return;
         }
         al.add(root.data);
         if(root.left == null && root.right == null){
             System.out.println(al.toString());
+            //temp.add(al);
+            return;
         }
-        rootToLeaf(root.left, al);
-        rootToLeaf(root.right, al);
-        al.remove(al.size() - 1);
+        rootToLeaf(root.left, new ArrayList<>(al), temp);
+        rootToLeaf(root.right, al, temp);
+        //al.remove(al.size() - 1);
     }
 }

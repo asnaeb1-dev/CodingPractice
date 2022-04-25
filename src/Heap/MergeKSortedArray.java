@@ -18,7 +18,7 @@ public class MergeKSortedArray {
 
     public static void main(String[] args) {
         int[][] a = {
-                {1, 2, 3, 4},
+                {1, 2, 3, 4, 5, 7},
                 {1, 2, 4},
                 {3, 5, 6}
         };

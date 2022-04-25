@@ -27,7 +27,7 @@ package Strings;
 public class LongestPalindromicSubstring {
     public static void main(String[] args) {
         String s = "abbaa";
-        System.out.println(longestSubstring(s, s.length()));
+        System.out.println(longest(s, s.length()));
     }
 
     private static int getSubstring(String str, int n){
@@ -76,5 +76,31 @@ public class LongestPalindromicSubstring {
 //        }
 
         return maxStr;
+    }
+
+
+    private static String longest(String s, int n){
+        if(n == 0) return "-1";
+        if(n == 1) return s;
+
+        String longestSubstring = "";
+        int maxLength = Integer.MIN_VALUE;
+        for(int i = 0;i<n;i++){
+            int l1 =  getLength(s, i, i);
+            int l2 = getLength(s, i, i + 1);
+            int max = Integer.max(l1, l2);
+            if(max > maxLength){
+                maxLength = max;
+                longestSubstring = s.substring(i - max / 2, i + max / 2);
+            }
+        }
+        return longestSubstring;
+    }
+    private static int getLength(String s, int left, int right){
+        while(left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)){
+            left--;
+            right++;
+        }
+        return right - left + 1;
     }
 }

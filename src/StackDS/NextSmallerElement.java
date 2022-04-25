@@ -1,6 +1,7 @@
 package StackDS;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
 public class NextSmallerElement {
@@ -11,19 +12,21 @@ public class NextSmallerElement {
     private static ArrayList<Integer> nextSmaller(int[] a, int n){
         ArrayList<Integer> al = new ArrayList<>();
         Stack<Integer> st = new Stack<>();
-        st.push(n - 1);
+        st.push(a[n - 1]);
         al.add(-1);
         for(int i = n - 2;i>=0;i--){
-            while(!st.empty() && a[st.peek()] > a[i]){
+            while(!st.empty() && st.peek() >= a[i]){
                 st.pop();
             }
+
             if(st.empty()){
                 al.add(-1);
             }else{
-                al.add(a[st.peek()]);
+                al.add(st.peek());
             }
-            st.push(i);
+            st.push(a[i]);
         }
+        Collections.reverse(al);
         return al;
     }
 }

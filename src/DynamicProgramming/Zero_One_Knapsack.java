@@ -23,8 +23,8 @@ public class Zero_One_Knapsack {
         int[] w = {10, 20, 30};
         int[] v = {60, 100, 120};
         int W = 50;
-        //System.out.println(knapsack(w, v, w.length, W));
-        mem = new int[w.length];
-        Arrays.fill(mem, -1);
+        System.out.println(knapsack(w, v, w.length, W));
+//        mem = new int[w.length];
+//        Arrays.fill(mem, -1);
     }
 }

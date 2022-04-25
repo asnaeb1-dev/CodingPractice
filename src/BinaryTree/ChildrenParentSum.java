@@ -17,27 +17,11 @@ public class ChildrenParentSum {
     }
     //using dfs
     private static boolean isSum(TreeNode root){
-        if(root == null) {
-            return true;
-        }
-        if(root.left == null && root.right == null){
-            return true;
-        }
-        if(root.left != null && root.right != null){
-            if(root.left.data + root.right.data != root.data){
-                return false;
-            }
-        }
-        if(root.left == null){
-            if(root.right.data != root.data){
-                return false;
-            }
-        }
-        if(root.right == null){
-            if(root.left.data != root.data){
-                return false;
-            }
-        }
+        if(root == null) return true;
+        if(root.left == null && root.right == null) return true;
+        if(root.left == null && root.right.data != root.data) return false;
+        if(root.right == null && root.left.data != root.data) return false;
+        if(root.left != null && root.right != null &&root.left.data + root.right.data != root.data) return false;
         return isSum(root.left) && isSum(root.right);
     }
     //using bfs
